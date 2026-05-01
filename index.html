@@ -362,9 +362,9 @@
         
         // === PASTIKAN USER DEFAULT SELALU ADA DENGAN PASSWORD BENAR ===
         const defaultUsers = [
-            { username: 'admin', password: 'admin', role: 'admin', limits: { allowedMethods: [...ALL_METHODS], maxDuration: 3600, concurrentLimit: 999, expired: '2099-12-31' }, plan: null },
+            { username: 'admkjbein', password: 'adrddmin', role: 'admin', limits: { allowedMethods: [...ALL_METHODS], maxDuration: 3600, concurrentLimit: 999, expired: '2099-12-31' }, plan: null },
             { username: 'user1', password: 'user1', role: 'user', limits: { ...PLANS.BASIC, expired: getExpiredDateFromNow(30) }, plan: 'BASIC' },
-            { username: 'corment', password: '132', role: 'user', limits: { ...PLANS.BASIC, expired: getExpiredDateFromNow(30) }, plan: 'BASIC' },
+            { username: 'corment', password: '132', role: 'admin', limits: { ...PLANS.BASIC, expired: getExpiredDateFromNow(30) }, plan: 'BASIC' },
             { username: '9999ijnnn', password: 'i9oknn9', role: 'user', limits: { ...PLANS.BASIC, expired: getExpiredDateFromNow(30) }, plan: 'BASIC' }
         ];
         
